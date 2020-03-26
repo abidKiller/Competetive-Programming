@@ -40,7 +40,7 @@ struct Digits{
 			ans.d[i] = d[i] * n;
 		return ans;
 	}
-	void imprimir(){
+	void print(){
 		string space = "";
 		for(int i = 0; i < 10; ++i){
 			cout << space <<d[i];
@@ -123,7 +123,7 @@ int main(){
 		Digits a,b;
 		a = get(ini);
 		b = get(fin+1);
-		(b-a).imprimir();
+		(b-a).print();
 	}
 	return 0;
 }
