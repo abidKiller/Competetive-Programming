@@ -53,7 +53,7 @@ struct Digits{
 
 Digits c[10];
 
-void precalcular(){ //calculates the digits of powers of 1 - powers of 10
+void precalculate(){ //calculates the digits of powers of 1 - powers of 10
 	for(int i = 1; i < 9 ; ++i){
 		c[i] = c[i-1] * 10; // each digit will be needed x 10 because it will put 10 different digits to its left
 		c[i] = c[i] + pow(10,i-1); //we add to each digit how much it will have on the left
@@ -61,7 +61,21 @@ void precalcular(){ //calculates the digits of powers of 1 - powers of 10
 		if(i != 1)
 			c[i].d[0] -= 10;
 	}
+
 }
+
+/*
+0 0 0 0 0 0 0 0 0 0
+1 1 1 1 1 1 1 1 1 1
+10 20 20 20 20 20 20 20 20 20
+189 299 299 299 299 299 299 299 299 299
+2880 3990 3990 3990 3990 3990 3990 3990 3990 3990
+38789 49899 49899 49899 49899 49899 49899 49899 49899 49899
+487880 598990 598990 598990 598990 598990 598990 598990 598990 598990
+5878790 6989900 6989900 6989900 6989900 6989900 6989900 6989900 6989900 6989900
+68787889 79898999 79898999 79898999 79898999 79898999 79898999 79898999 79898999 79898999
+
+*/
 Digits get(int num){
 	Digits ans;
 	string n = toString(num);
@@ -84,13 +98,13 @@ Digits get(int num){
 	for(int i = 0; i < n.size(); ++i){
 		int dig = n[i] - '0';
 		int cant = n.size() - i - 1;
-		int adicionales = 0;
+		int adicional = 0;
 		for(int j = 1; j < cant; ++j)
-			adicionales += pow(10, j);
+			adicional += pow(10, j);
 		if(i == 0)//we are in the first digit
-			ans.d[0] += ( (dig - 1) * adicionales);//the previous numbers do not have zero to the right (000001 not valid)
+			ans.d[0] += ( (dig - 1) * adicional);//the previous numbers do not have zero to the right (000001 not valid)
 		else{
-			ans.d[0] += (dig * adicionales);
+			ans.d[0] += (dig * adicional);
 			if( dig ) // if the digit is not zero then before dig there were zeros in that position
 				ans.d[0] += pow(10,cant);
 		}
@@ -101,9 +115,9 @@ Digits get(int num){
 }
 
 int main(){
-	freopen("entrada.in","r",stdin);
 
-	precalcular();
+
+	precalculate();
 	int ini,fin;
 	while(cin >> ini >> fin && !(ini==0 && fin==0)){
 		Digits a,b;
