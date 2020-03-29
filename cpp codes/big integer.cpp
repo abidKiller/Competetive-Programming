@@ -1,6 +1,8 @@
 #include<bits/stdc++.h>
+#define ll bigint
 using namespace std;
-
+const int base = 1000000000;
+const int base_digits = 9;
 struct bigint {
     vector<int> a;
     int sign;
