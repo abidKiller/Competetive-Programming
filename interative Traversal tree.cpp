@@ -11,6 +11,7 @@ typedef struct node{
 
 } node;
 
+
 void inorder(node* p)
 {
 
@@ -21,7 +22,73 @@ void inorder(node* p)
   }
 
 }
+/// any kind of processing uses POSTORDER traversal
+class Processing
+{
+  public:
 
+int countALL(node* p)
+{
+  int l=0;
+  int r=0;
+  if(p!=NULL)
+  {
+    l=countALL(p->left);
+    r=countALL(p->right);
+     
+    return l+r+1;
+  }
+  return 0;
+}
+
+int countNonLeaf(node* p)
+{
+  int l=0;
+  int r=0;
+  if(p!=NULL)
+  {
+    l=countNonLeaf(p->left);
+    r=countNonLeaf(p->right);
+    if(p->left&&p->right)
+       return l+r+1; //incremnts the return if node if nonleaf
+    else 
+    return l+r;
+  }
+  return 0;
+}
+
+int addAllNodeElements(node* p)
+{
+  int l=0;
+  int r=0;
+  if(p!=NULL)
+  {
+    l+=addAllNodeElements(p->left);
+    r+=addAllNodeElements(p->right);
+     
+    return l+r+p->data; // adds nodes data 
+  }
+  return 0;
+}
+
+int maxHeight(node* p)
+{
+  int l=0;
+  int r=0;
+
+  if(p!=NULL)
+  {
+    l=maxHeight(p->left);
+    r=maxHeight(p->right);
+
+    if(l>r)
+      return l+1;
+    else 
+      return r+1;
+  }
+  return 0;
+}
+};
 node* root=NULL;
 void init(char a[])
 {
@@ -66,7 +133,7 @@ void init(char a[])
        }
   }
 }
-
+// hardest one
 void postOrder(node* p)
 {
   stack<node*> s;
@@ -102,7 +169,7 @@ void postOrder(node* p)
 
 
 
-}
+};
 void levelOrder(node* p){
 
   queue<node*> q;
