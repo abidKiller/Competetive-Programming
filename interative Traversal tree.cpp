@@ -103,15 +103,39 @@ void postOrder(node* p)
 
 
 }
+void levelOrder(node* p){
+
+  queue<node*> q;
+
+  q.push(p);
+
+  while(!q.empty()){
+    node *t=q.front();
+    q.pop();
+    printf("%c",t->data);
+    if(t->left){
+        q.push(t->left);
+    }
+    if(t->right)
+    {
+        q.push(t->right);
+    }
+      
+  
+  }
+
+}
 int main()
 {
-  char a[]="abcdefg";
+  char a[]="abcdefg"; // array representation of tree
 
   init(a);
   fflush(stdout);
   inorder(root);
   printf("\n");
-  postOrder(root);
+//  postOrder(root);
+  printf("\n");
+  levelOrder(root);
  
 
 
