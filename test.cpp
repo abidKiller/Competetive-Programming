@@ -1,37 +1,80 @@
-#include <algorithm>
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+
 using namespace std;
 
-struct A
+int mod = 1000000007;
+
+int dp[1000][1000];
+
+int calculate(int pos, int prev, string s, vector<int>* index)
 {
-    int x, y;
-};
-struct cmp
-{
-    bool operator()(const A& a,const A& b)
-    {
-        return a.x<b.x;
+
+    // base case
+    if (pos == s.length())
+        return 1;
+
+    // If current subproblem has been solved, use the value
+    if (dp[pos][prev] != -1)
+        return dp[pos][prev];
+
+    // current character
+    int c = s[pos] - 'a';
+
+    // search through all the indiced at which the current
+    // character occurs. For each index greater than prev,
+    // take the index and move
+    // to the next position, and add to the answer.
+    int answer = 0;
+    for (int i = 0; i < index.size(); i++) {
+        if (index[i] > prev) {
+            answer = (answer % mod + calculate(pos + 1,
+                         index[i], s, index) % mod) % mod;
+        }
     }
 
-};
-typedef struct A A;
+    // Store and return the solution for this subproblem
+    return dp[pos][prev] = answer;
+}
+
+int countWays(vector<string>& a, string s)
+{
+    int n = a.size();
+
+    // preprocess the strings by storing for each
+    // character of every string, the index of their
+    // occurrence we will use a common list for all
+    // because of only the index matter
+    // in the string from which the character was picked
+    vector<int> index[26];
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < a[i].length(); j++) {
+
+            // we are storing j+1 because the initial picked index
+            // in the recursive step will ne 0.
+            // This is just for ease of implementation
+            index[a[i][j] - 'a'].push_back(j + 1);
+        }
+    }
+
+    // initialise dp table. -1 represents that
+    // the subproblem hasn't been solved
+    memset(dp, -1, sizeof(dp));
+
+    return calculate(0, 0, s, index);
+}
+
+// Driver Code
 int main()
 {
-    A arr[3];
+    vector<string> A;
+    A.push_back("b");
+    A.push_back("a");
+    A.push_back("aab");
 
-    arr[0].x=5;
-    arr[1].x=4;
-    arr[2].x=3;
+    string S = "aabab";
 
-     priority_queue<A,vector<A>,cmp> p(arr,arr+3);
+    cout << countWays(A, S);
 
-     for(int i=0;i<3;i++)
-
-     {
-        cout<< p<<endl;
-        p.pop();
-     }
-    //...
-   // std::sort(arr, arr+3, [](A a, A b)->bool{ return a.x < b.x; });
-    //std::sort(array, array+1000, [](A a, A b){ return a.y < b.y; });
+    return 0;
 }
